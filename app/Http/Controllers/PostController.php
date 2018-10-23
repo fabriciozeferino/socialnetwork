@@ -17,7 +17,6 @@ class PostController extends Controller
      */
     public function index()
     {
-
         return PostResource::collection(Post::paginate(5));
     }
 
@@ -29,12 +28,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        Post::create([
-            "user_id" => $request->user_id,
-	        "img_url" => $request->img_url,
-            "title" => $request->title
-        ]);
-        return "Post created";
+        return response(new PostResource(Post::create([
+                "user_id" => $request->user_id,
+                "img_url" => $request->img_url,
+                "title" => $request->title
+            ]))
+        );
+
     }
 
     /**
