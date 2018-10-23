@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Comment;
 
 class CommentController extends Controller
 {
@@ -13,7 +14,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        return \DB::table('comments')->get();
     }
 
     /**
@@ -24,7 +25,13 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Comment::create([
+            "user_id" => $request->user_id,
+            "post_id" => $request->post_id,
+            "comment" => $request->comment
+        ]);
+
+        return response('Comment created');
     }
 
     /**

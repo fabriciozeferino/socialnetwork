@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Comment;
+use App\Http\Resources\PostResource;
+use App\Http\Resources\PostCollection;
 
 class PostController extends Controller
 {
@@ -14,7 +17,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Post::all();
+
+        return PostResource::collection(Post::paginate(5));
     }
 
     /**
@@ -28,7 +32,7 @@ class PostController extends Controller
         Post::create([
             "user_id" => $request->user_id,
 	        "img_url" => $request->img_url,
-	        "title" => $request->title
+            "title" => $request->title
         ]);
         return "Post created";
     }
@@ -39,9 +43,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        return Post::where('id', $id)->get();
+        return new PostResource($post);
     }
 
     /**

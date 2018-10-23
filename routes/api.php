@@ -14,3 +14,4 @@ use Illuminate\Http\Request;
 */
 
 Route::apiResource('posts', 'PostController');
+Route::apiResource('comments', 'CommentController');
